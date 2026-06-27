@@ -22,7 +22,7 @@ def fetch_live_prices():
             # === TOP LIQUIDITY ===
             'AAVE/USDT', 'ADA/USDT', 'ALGO/USDT', 'APE/USDT', 'ATOM/USDT', 'BCH/USDT', 'BNB/USDT', 
             'BTC/USDT', 'CHZ/USDT', 'CRV/USDT', 'DOGE/USDT', 'DOT/USDT', 'ETC/USDT', 'ETH/USDT', 
-            'FIL/USDT', 'FLOW/USDT', 'GRT/USDT', 'ICP/USDT', 'INJ/USDT', 'LINK/USDT', 'LTC/USDT', 
+            'FIL/USDT', 'GRT/USDT', 'ICP/USDT', 'INJ/USDT', 'LINK/USDT', 'LTC/USDT', 
             'MANA/USDT', 'NEAR/USDT', 'NEO/USDT', 'OP/USDT', 'POL/USDT', 'QNT/USDT', 'QTUM/USDT', 
             'RUNE/USDT', 'SHIB/USDT', 'SOL/USDT', 'SNX/USDT', 'TRX/USDT', 'TWT/USDT', 'UNI/USDT', 
             'XLM/USDT', 'XMR/USDT', 'XRP/USDT', 'XTZ/USDT', 'YFI/USDT', 'ZEC/USDT',
@@ -60,22 +60,30 @@ def fetch_live_prices():
             'XPLUS/USDT', 'XRO/USDT', 'ZBCN/USDT', 'ZBT/USDT', 'ZENT/USDT', 'ZEREBRO/USDT', 'ZKC/USDT', 
             'ZRX/USDT'
         ]
-        markets = exchange.fetch_tickers(tickers_to_fetch)
+
+        print("Pobieranie danych rynkowych z Bitget...")
+        
+        # Pobieramy zbiorczo wszystkie tickery dostępne na giełdzie
+        all_markets = exchange.fetch_tickers()
         
         print("\n=== RAPORT CENOWY OMNI-FLOW V6.0 ===")
-        print(f"{'Asset':<10} | {'Cena LIVE (Bitget)':<20}")
-        print("-" * 35)
+        print(f"{'Asset':<15} | {'Cena LIVE (Bitget)':<20}")
+        print("-" * 40)
         
         for ticker in tickers_to_fetch:
-            if ticker in markets:
-                price = markets[ticker]['last']
+            if ticker in all_markets:
+                price = all_markets[ticker]['last']
                 asset_name = ticker.split('/')[0]
-                print(f"{asset_name:<10} | {price:<20}")
+                print(f"{asset_name:<15} | {price:<20}")
+            else:
+                # Jeśli jakiejś monety brakuje, skrypt nie umiera, tylko informuje o tym w logu
+                asset_name = ticker.split('/')[0]
+                print(f"{asset_name:<15} | [BRAK PARY NA BITGET]")
                 
         print("====================================")
         
     except Exception as e:
-        print(f"Błąd API Bitget: {e}")
+        print(f"Błąd krytyczny skryptu: {e}")
 
 if __name__ == "__main__":
     fetch_live_prices()
