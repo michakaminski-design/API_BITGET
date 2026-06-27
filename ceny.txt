@@ -1,0 +1,240 @@
+OSTATNIA AKTUALIZACJA: 2026-06-27 12:01:30 UTC
+Asset           | Cena LIVE (Bitget)  
+----------------------------------------
+AAVE            | 97.19               
+ADA             | 0.1472              
+ALGO            | 0.088               
+APE             | 0.1422              
+ATOM            | 1.605               
+BCH             | 196.3               
+BNB             | 563.0               
+BTC             | 60347.92            
+CHZ             | 0.01799             
+CRV             | 0.192               
+DOGE            | 0.07529             
+DOT             | 0.843               
+ETC             | 7.258               
+ETH             | 1583.85             
+FIL             | 0.7444              
+GRT             | 0.01804             
+ICP             | 2.177               
+INJ             | 4.865               
+LINK            | 7.357               
+LTC             | 42.52               
+MANA            | 0.06525             
+NEAR            | 1.82                
+NEO             | 1.927               
+OP              | 0.1038              
+POL             | 0.07169             
+QNT             | 66.12               
+QTUM            | 0.6833              
+RUNE            | 0.4013              
+SHIB            | 4.257e-06           
+SOL             | 71.85               
+SNX             | 0.2127              
+TRX             | 0.32101             
+TWT             | 0.3547              
+UNI             | 2.919               
+XLM             | 0.1764              
+XMR             | [BRAK PARY]
+XRP             | 1.0595              
+XTZ             | 0.2187              
+YFI             | [BRAK PARY]
+ZEC             | 409.0               
+1INCH           | 0.06943             
+ACX             | 0.04271             
+AGLD            | 0.2028              
+AGX             | [BRAK PARY]
+ALCH            | [BRAK PARY]
+API3            | 0.2298              
+APT             | 0.5975              
+ARB             | 0.0745              
+ARKM            | 0.1192              
+ASTR            | 0.005076            
+AUCTION         | 3.322               
+AXS             | 0.986               
+BICO            | 0.0192              
+BIGTIME         | 0.0076              
+BLUR            | 0.01508             
+CAKE            | 1.312               
+CELO            | 0.06542             
+CFX             | 0.04275             
+COMP            | 16.08               
+DYDX            | 0.1526              
+DYM             | 0.01535             
+ENA             | 0.07855             
+ENJ             | 0.02944             
+ENS             | 4.281               
+GALA            | 0.002297            
+GAS             | 1.038               
+GMX             | 5.525               
+HIGH            | [BRAK PARY]
+HBAR            | 0.07281             
+IMX             | 0.1246              
+IO              | 0.1793              
+JASMY           | 0.004485            
+JTO             | 0.8073              
+JUP             | 0.2229              
+KAVA            | 0.04345             
+KNC             | 0.1103              
+LDO             | 0.2464              
+LRC             | [BRAK PARY]
+LPT             | 1.564               
+METIS           | 2.781               
+MINA            | 0.0393              
+MOVR            | 1.155               
+MASK            | 0.3981              
+MTL             | [BRAK PARY]
+NFP             | 0.00655             
+NOT             | 0.000377            
+ONDO            | 0.3186              
+ORDI            | 3.143               
+PENDLE          | 1.246               
+PHB             | [BRAK PARY]
+POLYX           | 0.03648             
+PYTH            | 0.03396             
+REZ             | 0.002987            
+RPL             | [BRAK PARY]
+RSR             | 0.001202            
+RVN             | 0.004028            
+SCR             | [BRAK PARY]
+SEI             | 0.05139             
+STRK            | 0.02903             
+STX             | 0.1701              
+SUI             | 0.7005              
+SUPER           | 0.0876              
+TAO             | 212.1               
+THE             | [BRAK PARY]
+TIA             | 0.3737              
+TON             | [BRAK PARY]
+TSTBSC          | [BRAK PARY]
+TURBO           | 0.000808            
+UMA             | [BRAK PARY]
+VANRY           | 0.003058            
+VIC             | 0.03915             
+WLD             | 0.4666              
+WOO             | 0.01112             
+WIF             | 0.1696              
+YGG             | 0.0228              
+ZIL             | 0.002973            
+ZRO             | 0.783               
+1000LUNC        | [BRAK PARY]
+ACT             | 0.0082              
+AIXBT           | 0.0196              
+AIX             | [BRAK PARY]
+AKE             | [BRAK PARY]
+ANIME           | 0.002661            
+ANKR            | 0.003538            
+APR             | 0.20279             
+ARC             | [BRAK PARY]
+ARIA            | 0.02595             
+ASTER           | 0.6304              
+AT              | [BRAK PARY]
+B3              | [BRAK PARY]
+BAN             | 0.07285             
+BARD            | 0.13508             
+BLESS           | 0.00791             
+BLUAI           | 0.014304            
+BR              | 0.1413              
+BROCCOLI        | 0.01163             
+BTR             | 0.01904             
+CARV            | 0.03833             
+CC              | 0.15118             
+CETUS           | 0.01681             
+CKB             | 0.00095             
+CLANKER         | 15.62               
+COW             | 0.1451              
+CVC             | [BRAK PARY]
+DASH            | [BRAK PARY]
+DOOD            | 0.001482            
+DOLO            | [BRAK PARY]
+DUSK            | 0.0785              
+EDU             | [BRAK PARY]
+ENSO            | 0.594               
+ESPORTS         | [BRAK PARY]
+FLOCK           | 0.03416             
+FLOKI           | 2.199e-05           
+FLUID           | [BRAK PARY]
+GIGGLE          | [BRAK PARY]
+GRASS           | 0.5113              
+GTC             | [BRAK PARY]
+GUN             | 0.004618            
+HANA            | [BRAK PARY]
+HEI             | 0.1467              
+HEMI            | [BRAK PARY]
+HYPER           | 0.07821             
+HYPE            | 63.423              
+ICNT            | 0.2305              
+IP              | 0.31087             
+JCT             | 0.004285            
+JELLYJELLY      | 0.05708             
+JST             | 0.08553             
+KAS             | 0.028               
+LAB             | 18.08433            
+LIGHT           | 0.11854             
+LINEA           | 0.002309            
+LUMIA           | 0.1207              
+LYN             | [BRAK PARY]
+MAGIC           | [BRAK PARY]
+MERL            | 0.0184              
+MEW             | 0.0003608           
+MMT             | 0.1887              
+MUBARAK         | 0.01003             
+MYX             | 0.1101              
+NAORIS          | 0.03839             
+NEWT            | 0.04723             
+NOM             | 0.001419            
+OG              | 2.524               
+OGN             | 0.01506             
+ONG             | [BRAK PARY]
+ONT             | 0.04274             
+OPEN            | 0.16474             
+ORBS            | 0.005972            
+ORCA            | 1.181               
+PARTI           | 0.04717             
+PAXG            | 4081.44             
+PENGU           | 0.006251            
+PEOPLE          | 0.005139            
+PIPIN           | [BRAK PARY]
+PIEVERSE        | [BRAK PARY]
+PIXEL           | 0.004949            
+PNUT            | 0.04105             
+PTB             | [BRAK PARY]
+PUMP            | 0.001308            
+RAD             | [BRAK PARY]
+RARE            | 0.01224             
+RED             | 0.0917              
+RESOLV          | 0.02012             
+RIVER           | 3.6847              
+ROAM            | 0.009287            
+SAGA            | 0.01338             
+SAROS           | [BRAK PARY]
+SIGN            | 0.00843             
+SKYAI           | 0.36772             
+SOMI            | 0.1011              
+STG             | 0.1595              
+STO             | 0.04743             
+SXT             | 0.00704             
+TNSR            | 0.03696             
+TRUST           | 0.05209             
+TRUTH           | [BRAK PARY]
+USELESS         | [BRAK PARY]
+USUAL           | 0.00891             
+USTC            | 0.005552            
+VANA            | 1.0794              
+VELVET          | 1.35881             
+VINE            | [BRAK PARY]
+VIRTUAL         | 0.5337              
+VVV             | [BRAK PARY]
+WAXP            | [BRAK PARY]
+WLFI            | 0.05803             
+XNY             | [BRAK PARY]
+XPIN            | [BRAK PARY]
+XPLUS           | [BRAK PARY]
+XRO             | [BRAK PARY]
+ZBCN            | 0.002374            
+ZBT             | 0.10478             
+ZENT            | 0.002331            
+ZEREBRO         | [BRAK PARY]
+ZKC             | 0.04457             
+ZRX             | 0.0804              
