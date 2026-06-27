@@ -5,7 +5,6 @@ import requests
 from datetime import datetime
 
 def fetch_live_prices():
-    # Pobieranie kluczy
     BG_KEY = os.getenv('BG_KEY')
     BG_SECRET = os.getenv('BG_SECRET')
     BG_PASS = os.getenv('BG_PASS')
@@ -16,13 +15,16 @@ def fetch_live_prices():
         return
 
     try:
-        # Inicjalizacja Bitget
-        exchange = ccxt.bitget({
+        # Inicjalizacja głównej giełdy (Bitget)
+        bitget = ccxt.bitget({
             'apiKey': BG_KEY,
             'secret': BG_SECRET,
             'password': BG_PASS,
             'enableRateLimit': True,
         })
+
+        # Inicjalizacja giełdy zapasowej (Binance - nie wymaga kluczy API do samych cen publicznych)
+        binance = ccxt.binance({'enableRateLimit': True})
 
         tickers_to_fetch = [
             # === TOP LIQUIDITY ===
@@ -67,24 +69,36 @@ def fetch_live_prices():
             'ZRX/USDT'
         ]
 
-        all_markets = exchange.fetch_tickers()
+        print("Pobieranie cen głównych z Bitget...")
+        bg_markets = bitget.fetch_tickers()
         
-        # Generowanie nowej, czystej treści pliku z datą zapisu (UTC)
+        # Pobieramy też na wszelki wypadek mapę rynku z Binance
+        print("Pobieranie cen zapasowych z Binance...")
+        bn_markets = binance.fetch_tickers()
+        
         current_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
         content = f"OSTATNIA AKTUALIZACJA: {current_time}\n"
-        content += f"{'Asset':<15} | {'Cena LIVE (Bitget)':<20}\n"
-        content += "-" * 40 + "\n"
+        content += f"{'Asset':<15} | {'Cena LIVE':<20} | {'Źródło':<15}\n"
+        content += "-" * 56 + "\n"
         
         for ticker in tickers_to_fetch:
-            if ticker in all_markets:
-                price = all_markets[ticker]['last']
-                asset_name = ticker.split('/')[0]
-                content += f"{asset_name:<15} | {price:<20}\n"
+            asset_name = ticker.split('/')[0]
+            
+            # 1. Próba pobrania z Bitget
+            if ticker in bg_markets:
+                price = bg_markets[ticker]['last']
+                content += f"{asset_name:<15} | {price:<20} | Bitget\n"
+            
+            # 2. Jeśli nie ma na Bitget, sprawdź Binance
+            elif ticker in bn_markets:
+                price = bn_markets[ticker]['last']
+                content += f"{asset_name:<15} | {price:<20} | Binance (Zapas)\n"
+            
+            # 3. Jeśli nie ma nigdzie
             else:
-                asset_name = ticker.split('/')[0]
-                content += f"{asset_name:<15} | [BRAK PARY]\n"
+                content += f"{asset_name:<15} | {'[BRAK PARY]':<20} | -\n"
 
-        # AUTOMATYCZNE NADPISYWANIE PLIKU CENY.TXT NA GITHUBIE
+        # Zapis pliku na GitHubie
         repo_owner = "michakaminski-design"
         repo_name = "API_BITGET"
         file_path = "ceny.txt"
@@ -92,11 +106,9 @@ def fetch_live_prices():
         url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{file_path}"
         headers = {"Authorization": f"token {GH_TOKEN}"}
         
-        # Sprawdzamy, czy plik już istnieje, aby pobrać jego "sha" (wymagane przez GitHub do nadpisania)
         response = requests.get(url, headers=headers)
         sha = response.json().get("sha") if response.status_code == 200 else None
         
-        # Przygotowanie paczki danych do wysyłki
         message = f"Aktualizacja cen {current_time}"
         content_bytes = content.encode("utf-8")
         base64_content = base64.b64encode(content_bytes).decode("utf-8")
@@ -109,10 +121,9 @@ def fetch_live_prices():
         if sha:
             payload["sha"] = sha
             
-        # Bezwzględne nadpisanie pliku
         put_response = requests.put(url, json=payload, headers=headers)
         if put_response.status_code in [200, 201]:
-            print(f"Sukces: Plik ceny.txt został zaktualizowany na GitHubie o {current_time}!")
+            print(f"Sukces: Plik ceny.txt zaktualizowany!")
         else:
             print(f"Błąd zapisu na GitHub: {put_response.json()}")
 
