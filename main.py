@@ -1,16 +1,22 @@
 import os
 import ccxt
+import base64
+import requests
+from datetime import datetime
 
 def fetch_live_prices():
+    # Pobieranie kluczy
     BG_KEY = os.getenv('BG_KEY')
     BG_SECRET = os.getenv('BG_SECRET')
     BG_PASS = os.getenv('BG_PASS')
+    GH_TOKEN = os.getenv('GH_TOKEN')
 
-    if not all([BG_KEY, BG_SECRET, BG_PASS]):
-        print("BŁĄD: Brak kluczy API w zmiennych środowiskowych Rendera!")
+    if not all([BG_KEY, BG_SECRET, BG_PASS, GH_TOKEN]):
+        print("BŁĄD: Brak skonfigurowanych zmiennych środowiskowych na Renderze!")
         return
 
     try:
+        # Inicjalizacja Bitget
         exchange = ccxt.bitget({
             'apiKey': BG_KEY,
             'secret': BG_SECRET,
@@ -61,27 +67,55 @@ def fetch_live_prices():
             'ZRX/USDT'
         ]
 
-        print("Pobieranie danych rynkowych z Bitget...")
-        
-        # Pobieramy zbiorczo wszystkie tickery dostępne na giełdzie
         all_markets = exchange.fetch_tickers()
         
-        print("\n=== RAPORT CENOWY OMNI-FLOW V6.0 ===")
-        print(f"{'Asset':<15} | {'Cena LIVE (Bitget)':<20}")
-        print("-" * 40)
+        # Generowanie nowej, czystej treści pliku z datą zapisu (UTC)
+        current_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
+        content = f"OSTATNIA AKTUALIZACJA: {current_time}\n"
+        content += f"{'Asset':<15} | {'Cena LIVE (Bitget)':<20}\n"
+        content += "-" * 40 + "\n"
         
         for ticker in tickers_to_fetch:
             if ticker in all_markets:
                 price = all_markets[ticker]['last']
                 asset_name = ticker.split('/')[0]
-                print(f"{asset_name:<15} | {price:<20}")
+                content += f"{asset_name:<15} | {price:<20}\n"
             else:
-                # Jeśli jakiejś monety brakuje, skrypt nie umiera, tylko informuje o tym w logu
                 asset_name = ticker.split('/')[0]
-                print(f"{asset_name:<15} | [BRAK PARY NA BITGET]")
-                
-        print("====================================")
+                content += f"{asset_name:<15} | [BRAK PARY]\n"
+
+        # AUTOMATYCZNE NADPISYWANIE PLIKU CENY.TXT NA GITHUBIE
+        repo_owner = "michakaminski-design"
+        repo_name = "API_BITGET"
+        file_path = "ceny.txt"
         
+        url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{file_path}"
+        headers = {"Authorization": f"token {GH_TOKEN}"}
+        
+        # Sprawdzamy, czy plik już istnieje, aby pobrać jego "sha" (wymagane przez GitHub do nadpisania)
+        response = requests.get(url, headers=headers)
+        sha = response.json().get("sha") if response.status_code == 200 else None
+        
+        # Przygotowanie paczki danych do wysyłki
+        message = f"Aktualizacja cen {current_time}"
+        content_bytes = content.encode("utf-8")
+        base64_content = base64.b64encode(content_bytes).decode("utf-8")
+        
+        payload = {
+            "message": message,
+            "content": base64_content,
+            "branch": "main"
+        }
+        if sha:
+            payload["sha"] = sha
+            
+        # Bezwzględne nadpisanie pliku
+        put_response = requests.put(url, json=payload, headers=headers)
+        if put_response.status_code in [200, 201]:
+            print(f"Sukces: Plik ceny.txt został zaktualizowany na GitHubie o {current_time}!")
+        else:
+            print(f"Błąd zapisu na GitHub: {put_response.json()}")
+
     except Exception as e:
         print(f"Błąd krytyczny skryptu: {e}")
 
