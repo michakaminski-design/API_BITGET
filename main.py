@@ -4,6 +4,17 @@ import base64
 import requests
 from datetime import datetime
 
+def format_price(price):
+    if price is None:
+        return "[BRAK CENY]"
+    # Jeśli cena jest bardzo mała, formatujemy do 8 miejsc po przecinku bez notacji naukowej (np. 4.251e-06 -> 0.00000425)
+    if price < 0.0001:
+        return f"{price:.8f}".rstrip('0').rstrip('.') if f"{price:.8f}".rstrip('0').rstrip('.') else "0.0"
+    elif price < 1:
+        return f"{price:.6f}"
+    else:
+        return f"{price:.4f}"
+
 def fetch_live_prices():
     BG_KEY = os.getenv('BG_KEY')
     BG_SECRET = os.getenv('BG_SECRET')
@@ -15,7 +26,7 @@ def fetch_live_prices():
         return
 
     try:
-        # Inicjalizacja głównej giełdy (Bitget)
+        # Inicjalizacja Bitget
         bitget = ccxt.bitget({
             'apiKey': BG_KEY,
             'secret': BG_SECRET,
@@ -23,7 +34,7 @@ def fetch_live_prices():
             'enableRateLimit': True,
         })
 
-        # Inicjalizacja giełdy zapasowej (Binance - nie wymaga kluczy API do samych cen publicznych)
+        # Inicjalizacja Binance (Zapas)
         binance = ccxt.binance({'enableRateLimit': True})
 
         tickers_to_fetch = [
@@ -69,12 +80,19 @@ def fetch_live_prices():
             'ZRX/USDT'
         ]
 
-        print("Pobieranie cen głównych z Bitget...")
-        bg_markets = bitget.fetch_tickers()
+        print("Pobieranie cen z Bitget...")
+        bg_markets = {}
+        try:
+            bg_markets = bitget.fetch_tickers()
+        except Exception as e:
+            print(f"Ostrzeżenie: Nie udało się pobrać danych z Bitget: {e}")
         
-        # Pobieramy też na wszelki wypadek mapę rynku z Binance
-        print("Pobieranie cen zapasowych z Binance...")
-        bn_markets = binance.fetch_tickers()
+        print("Pobieranie cen z Binance...")
+        bn_markets = {}
+        try:
+            bn_markets = binance.fetch_tickers()
+        except Exception as e:
+            print(f"Ostrzeżenie: Nie udało się pobrać danych z Binance: {e}")
         
         current_time = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
         content = f"OSTATNIA AKTUALIZACJA: {current_time}\n"
@@ -84,17 +102,23 @@ def fetch_live_prices():
         for ticker in tickers_to_fetch:
             asset_name = ticker.split('/')[0]
             
-            # 1. Próba pobrania z Bitget
+            # 1. Próba z Bitget
             if ticker in bg_markets:
-                price = bg_markets[ticker]['last']
-                content += f"{asset_name:<15} | {price:<20} | Bitget\n"
+                raw_price = bg_markets[ticker]['last']
+                content += f"{asset_name:<15} | {format_price(raw_price):<20} | Bitget\n"
             
-            # 2. Jeśli nie ma na Bitget, sprawdź Binance
+            # 2. Próba z Binance
             elif ticker in bn_markets:
-                price = bn_markets[ticker]['last']
-                content += f"{asset_name:<15} | {price:<20} | Binance (Zapas)\n"
+                raw_price = bn_markets[ticker]['last']
+                content += f"{asset_name:<15} | {format_price(raw_price):<20} | Binance (Zapas)\n"
             
-            # 3. Jeśli nie ma nigdzie
+            # 3. Próba mapowania specyficznych nazw (np. 1000LUNC -> LUNC na Binance)
+            elif asset_name.startswith("1000") and f"{asset_name[4:]}/USDT" in bn_markets:
+                binance_ticker = f"{asset_name[4:]}/USDT"
+                raw_price = bn_markets[binance_ticker]['last'] * 1000
+                content += f"{asset_name:<15} | {format_price(raw_price):<20} | Binance (Zapas-Przeliczony)\n"
+                
+            # 4. Brak pary
             else:
                 content += f"{asset_name:<15} | {'[BRAK PARY]':<20} | -\n"
 
