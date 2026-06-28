@@ -1,240 +1,240 @@
-OSTATNIA AKTUALIZACJA: 2026-06-28 11:46:16 UTC
+OSTATNIA AKTUALIZACJA: 2026-06-28 12:02:22 UTC
 Asset           | Cena LIVE            | Źródło         
 --------------------------------------------------------
-AAVE            | 89.2000              | Bitget
-ADA             | 0.145400             | Bitget
-ALGO            | 0.086500             | Bitget
-APE             | 0.138300             | Bitget
+AAVE            | 89.2100              | Bitget
+ADA             | 0.145300             | Bitget
+ALGO            | 0.086700             | Bitget
+APE             | 0.137800             | Bitget
 ATOM            | 1.5780               | Bitget
-BCH             | 193.5000             | Bitget
-BNB             | 556.2000             | Bitget
-BTC             | 60305.0100           | Bitget
-CHZ             | 0.017720             | Bitget
-CRV             | 0.191700             | Bitget
-DOGE            | 0.073760             | Bitget
-DOT             | 0.808000             | Bitget
+BCH             | 193.6000             | Bitget
+BNB             | 557.0000             | Bitget
+BTC             | 60328.4400           | Bitget
+CHZ             | 0.017750             | Bitget
+CRV             | 0.192500             | Bitget
+DOGE            | 0.073770             | Bitget
+DOT             | 0.811000             | Bitget
 ETC             | 7.0470               | Bitget
-ETH             | 1582.3100            | Bitget
-FIL             | 0.728600             | Bitget
-GRT             | 0.017730             | Bitget
-ICP             | 2.1510               | Bitget
-INJ             | 4.6800               | Bitget
-LINK            | 7.2880               | Bitget
-LTC             | 43.1500              | Bitget
-MANA            | 0.063820             | Bitget
-NEAR            | 1.8700               | Bitget
-NEO             | 1.9110               | Bitget
-OP              | 0.100400             | Bitget
-POL             | 0.071500             | Bitget
+ETH             | 1582.0500            | Bitget
+FIL             | 0.729200             | Bitget
+GRT             | 0.017720             | Bitget
+ICP             | 2.1520               | Bitget
+INJ             | 4.6910               | Bitget
+LINK            | 7.2860               | Bitget
+LTC             | 43.2600              | Bitget
+MANA            | 0.063840             | Bitget
+NEAR            | 1.8690               | Bitget
+NEO             | 1.9180               | Bitget
+OP              | 0.100600             | Bitget
+POL             | 0.071750             | Bitget
 QNT             | 65.5200              | Bitget
-QTUM            | 0.691400             | Bitget
-RUNE            | 0.393600             | Bitget
+QTUM            | 0.690300             | Bitget
+RUNE            | 0.393700             | Bitget
 SHIB            | 0.00000421           | Bitget
-SOL             | 71.9700              | Bitget
-SNX             | 0.227900             | Bitget
-TRX             | 0.323240             | Bitget
+SOL             | 71.8900              | Bitget
+SNX             | 0.228500             | Bitget
+TRX             | 0.323470             | Bitget
 TWT             | 0.348400             | Bitget
-UNI             | 2.9290               | Bitget
-XLM             | 0.172000             | Bitget
+UNI             | 2.9240               | Bitget
+XLM             | 0.171800             | Bitget
 XMR             | 118.7000             | Binance (Zapas)
-XRP             | 1.0531               | Bitget
-XTZ             | 0.213400             | Bitget
-YFI             | 1652.0000            | Binance (Zapas)
-ZEC             | 385.5100             | Bitget
-1INCH           | 0.068210             | Bitget
+XRP             | 1.0521               | Bitget
+XTZ             | 0.213500             | Bitget
+YFI             | 1653.0000            | Binance (Zapas)
+ZEC             | 387.0800             | Bitget
+1INCH           | 0.068340             | Bitget
 ACX             | 0.041840             | Bitget
-AGLD            | 0.188000             | Bitget
+AGLD            | 0.186700             | Bitget
 AGX             | [BRAK PARY]          | -
 ALCH            | [BRAK PARY]          | -
-API3            | 0.223100             | Bitget
-APT             | 0.587000             | Bitget
-ARB             | 0.074500             | Bitget
-ARKM            | 0.115600             | Bitget
-ASTR            | 0.005106             | Bitget
-AUCTION         | 3.2600               | Bitget
+API3            | 0.224600             | Bitget
+APT             | 0.586800             | Bitget
+ARB             | 0.074600             | Bitget
+ARKM            | 0.115700             | Bitget
+ASTR            | 0.005128             | Bitget
+AUCTION         | 3.2790               | Bitget
 AXS             | 0.981000             | Bitget
-BICO            | 0.020130             | Bitget
-BIGTIME         | 0.007510             | Bitget
-BLUR            | 0.014800             | Bitget
-CAKE            | 1.3340               | Bitget
-CELO            | 0.067110             | Bitget
-CFX             | 0.042700             | Bitget
-COMP            | 15.7400              | Bitget
-DYDX            | 0.152500             | Bitget
-DYM             | 0.015420             | Bitget
-ENA             | 0.076200             | Bitget
+BICO            | 0.020120             | Bitget
+BIGTIME         | 0.007530             | Bitget
+BLUR            | 0.014890             | Bitget
+CAKE            | 1.3440               | Bitget
+CELO            | 0.067160             | Bitget
+CFX             | 0.042760             | Bitget
+COMP            | 15.7100              | Bitget
+DYDX            | 0.152900             | Bitget
+DYM             | 0.015480             | Bitget
+ENA             | 0.076220             | Bitget
 ENJ             | 0.029510             | Bitget
-ENS             | 4.1650               | Bitget
-GALA            | 0.002262             | Bitget
-GAS             | 1.0380               | Bitget
-GMX             | 5.4640               | Bitget
+ENS             | 4.1640               | Bitget
+GALA            | 0.002267             | Bitget
+GAS             | 1.0430               | Bitget
+GMX             | 5.4500               | Bitget
 HIGH            | 0.034000             | Binance (Zapas)
-HBAR            | 0.071460             | Bitget
-IMX             | 0.122700             | Bitget
+HBAR            | 0.071620             | Bitget
+IMX             | 0.123500             | Bitget
 IO              | 0.173300             | Bitget
-JASMY           | 0.004391             | Bitget
-JTO             | 0.816400             | Bitget
-JUP             | 0.219000             | Bitget
-KAVA            | 0.042980             | Bitget
-KNC             | 0.115300             | Bitget
-LDO             | 0.246500             | Bitget
+JASMY           | 0.004401             | Bitget
+JTO             | 0.809900             | Bitget
+JUP             | 0.218500             | Bitget
+KAVA            | 0.042950             | Bitget
+KNC             | 0.116600             | Bitget
+LDO             | 0.246800             | Bitget
 LRC             | 0.018790             | Binance (Zapas)
-LPT             | 1.5940               | Bitget
-METIS           | 2.7340               | Bitget
-MINA            | 0.038680             | Bitget
-MOVR            | 1.1440               | Bitget
-MASK            | 0.382500             | Bitget
-MTL             | 0.240000             | Binance (Zapas)
-NFP             | 0.005720             | Bitget
-NOT             | 0.000380             | Bitget
-ONDO            | 0.309500             | Bitget
-ORDI            | 3.2590               | Bitget
-PENDLE          | 1.2500               | Bitget
+LPT             | 1.5890               | Bitget
+METIS           | 2.7490               | Bitget
+MINA            | 0.038670             | Bitget
+MOVR            | 1.1390               | Bitget
+MASK            | 0.382600             | Bitget
+MTL             | 0.238000             | Binance (Zapas)
+NFP             | 0.005730             | Bitget
+NOT             | 0.000382             | Bitget
+ONDO            | 0.310000             | Bitget
+ORDI            | 3.2560               | Bitget
+PENDLE          | 1.2520               | Bitget
 PHB             | 0.015000             | Binance (Zapas)
-POLYX           | 0.036280             | Bitget
-PYTH            | 0.033870             | Bitget
+POLYX           | 0.036220             | Bitget
+PYTH            | 0.034000             | Bitget
 REZ             | 0.002986             | Bitget
-RPL             | 1.4000               | Binance (Zapas)
+RPL             | 1.3900               | Binance (Zapas)
 RSR             | 0.001185             | Bitget
 RVN             | 0.003962             | Bitget
-SCR             | 0.027960             | Binance (Zapas)
-SEI             | 0.050060             | Bitget
-STRK            | 0.029250             | Bitget
-STX             | 0.166900             | Bitget
-SUI             | 0.688200             | Bitget
-SUPER           | 0.085800             | Bitget
-TAO             | 208.5000             | Bitget
-THE             | 0.056200             | Binance (Zapas)
-TIA             | 0.379000             | Bitget
-TON             | 1.5630               | Binance (Zapas)
+SCR             | 0.028250             | Binance (Zapas)
+SEI             | 0.050090             | Bitget
+STRK            | 0.029200             | Bitget
+STX             | 0.167400             | Bitget
+SUI             | 0.687700             | Bitget
+SUPER           | 0.086200             | Bitget
+TAO             | 208.6000             | Bitget
+THE             | 0.056600             | Binance (Zapas)
+TIA             | 0.379600             | Bitget
+TON             | 1.5600               | Binance (Zapas)
 TSTBSC          | [BRAK PARY]          | -
-TURBO           | 0.000854             | Bitget
-UMA             | 0.385000             | Binance (Zapas)
-VANRY           | 0.003025             | Bitget
-VIC             | 0.039030             | Bitget
-WLD             | 0.452200             | Bitget
+TURBO           | 0.000850             | Bitget
+UMA             | 0.386000             | Binance (Zapas)
+VANRY           | 0.003020             | Bitget
+VIC             | 0.039250             | Bitget
+WLD             | 0.449200             | Bitget
 WOO             | 0.011030             | Bitget
-WIF             | 0.176600             | Bitget
-YGG             | 0.022850             | Bitget
-ZIL             | 0.002932             | Bitget
-ZRO             | 0.753000             | Bitget
-1000LUNC        | 0.060690             | Binance (Zapas-Przeliczony)
-ACT             | 0.013800             | Bitget
-AIXBT           | 0.019080             | Bitget
+WIF             | 0.175100             | Bitget
+YGG             | 0.022870             | Bitget
+ZIL             | 0.002936             | Bitget
+ZRO             | 0.752000             | Bitget
+1000LUNC        | 0.060660             | Binance (Zapas-Przeliczony)
+ACT             | 0.014610             | Bitget
+AIXBT           | 0.019260             | Bitget
 AIX             | [BRAK PARY]          | -
 AKE             | [BRAK PARY]          | -
-ANIME           | 0.002635             | Bitget
-ANKR            | 0.003489             | Bitget
-APR             | 0.192980             | Bitget
+ANIME           | 0.002654             | Bitget
+ANKR            | 0.003496             | Bitget
+APR             | 0.193220             | Bitget
 ARC             | [BRAK PARY]          | -
-ARIA            | 0.025200             | Bitget
-ASTER           | 0.620700             | Bitget
-AT              | 0.144500             | Binance (Zapas)
+ARIA            | 0.025350             | Bitget
+ASTER           | 0.621800             | Bitget
+AT              | 0.143600             | Binance (Zapas)
 B3              | [BRAK PARY]          | -
 BAN             | 0.075340             | Bitget
-BARD            | 0.136220             | Bitget
-BLESS           | 0.007945             | Bitget
-BLUAI           | 0.013034             | Bitget
+BARD            | 0.135700             | Bitget
+BLESS           | 0.007964             | Bitget
+BLUAI           | 0.012940             | Bitget
 BR              | 0.141600             | Bitget
-BROCCOLI        | 0.011570             | Bitget
-BTR             | 0.019060             | Bitget
-CARV            | 0.036990             | Bitget
-CC              | 0.152760             | Bitget
-CETUS           | 0.016800             | Bitget
-CKB             | 0.000946             | Bitget
-CLANKER         | 15.4600              | Bitget
+BROCCOLI        | 0.011640             | Bitget
+BTR             | 0.019070             | Bitget
+CARV            | 0.037030             | Bitget
+CC              | 0.152710             | Bitget
+CETUS           | 0.016870             | Bitget
+CKB             | 0.000949             | Bitget
+CLANKER         | 15.4000              | Bitget
 COW             | 0.144700             | Bitget
-CVC             | 0.021260             | Binance (Zapas)
-DASH            | 32.3300              | Binance (Zapas)
-DOOD            | 0.001470             | Bitget
-DOLO            | 0.023270             | Binance (Zapas)
+CVC             | 0.021180             | Binance (Zapas)
+DASH            | 32.3800              | Binance (Zapas)
+DOOD            | 0.001487             | Bitget
+DOLO            | 0.023320             | Binance (Zapas)
 DUSK            | 0.077300             | Bitget
-EDU             | 0.030400             | Binance (Zapas)
-ENSO            | 0.591400             | Bitget
+EDU             | 0.030200             | Binance (Zapas)
+ENSO            | 0.593800             | Bitget
 ESPORTS         | [BRAK PARY]          | -
-FLOCK           | 0.033910             | Bitget
-FLOKI           | 0.00002171           | Bitget
+FLOCK           | 0.033960             | Bitget
+FLOKI           | 0.00002178           | Bitget
 FLUID           | [BRAK PARY]          | -
 GIGGLE          | 25.1200              | Binance (Zapas)
-GRASS           | 0.500700             | Bitget
+GRASS           | 0.499100             | Bitget
 GTC             | 0.068000             | Binance (Zapas)
-GUN             | 0.004581             | Bitget
+GUN             | 0.004579             | Bitget
 HANA            | [BRAK PARY]          | -
-HEI             | 0.130200             | Bitget
-HEMI            | 0.004570             | Binance (Zapas)
-HYPER           | 0.080730             | Bitget
-HYPE            | 63.3780              | Bitget
-ICNT            | 0.235700             | Bitget
-IP              | 0.309050             | Bitget
-JCT             | 0.004930             | Bitget
-JELLYJELLY      | 0.055030             | Bitget
-JST             | 0.087590             | Bitget
-KAS             | 0.027840             | Bitget
-LAB             | 16.9124              | Bitget
-LIGHT           | 0.118840             | Bitget
-LINEA           | 0.002302             | Bitget
-LUMIA           | 0.112900             | Bitget
+HEI             | 0.133300             | Bitget
+HEMI            | 0.004550             | Binance (Zapas)
+HYPER           | 0.079940             | Bitget
+HYPE            | 63.2270              | Bitget
+ICNT            | 0.233000             | Bitget
+IP              | 0.308890             | Bitget
+JCT             | 0.005021             | Bitget
+JELLYJELLY      | 0.055130             | Bitget
+JST             | 0.087640             | Bitget
+KAS             | 0.027820             | Bitget
+LAB             | 16.9670              | Bitget
+LIGHT           | 0.119700             | Bitget
+LINEA           | 0.002298             | Bitget
+LUMIA           | 0.112000             | Bitget
 LYN             | [BRAK PARY]          | -
-MAGIC           | 0.041300             | Binance (Zapas)
+MAGIC           | 0.041400             | Binance (Zapas)
 MERL            | 0.018910             | Bitget
-MEW             | 0.000363             | Bitget
-MMT             | 0.178400             | Bitget
-MUBARAK         | 0.009940             | Bitget
-MYX             | 0.103200             | Bitget
-NAORIS          | 0.038020             | Bitget
-NEWT            | 0.047680             | Bitget
-NOM             | 0.001396             | Bitget
-OG              | 2.5020               | Bitget
+MEW             | 0.000371             | Bitget
+MMT             | 0.178700             | Bitget
+MUBARAK         | 0.010040             | Bitget
+MYX             | 0.102000             | Bitget
+NAORIS          | 0.037840             | Bitget
+NEWT            | 0.048060             | Bitget
+NOM             | 0.001402             | Bitget
+OG              | 2.5120               | Bitget
 OGN             | 0.014830             | Bitget
-ONG             | 0.044760             | Binance (Zapas)
-ONT             | 0.042310             | Bitget
-OPEN            | 0.162460             | Bitget
-ORBS            | 0.005880             | Bitget
-ORCA            | 1.1740               | Bitget
-PARTI           | 0.049010             | Bitget
-PAXG            | 4075.2600            | Bitget
-PENGU           | 0.006248             | Bitget
-PEOPLE          | 0.005107             | Bitget
+ONG             | 0.044890             | Binance (Zapas)
+ONT             | 0.042680             | Bitget
+OPEN            | 0.162170             | Bitget
+ORBS            | 0.005883             | Bitget
+ORCA            | 1.1730               | Bitget
+PARTI           | 0.048890             | Bitget
+PAXG            | 4075.5200            | Bitget
+PENGU           | 0.006255             | Bitget
+PEOPLE          | 0.005111             | Bitget
 PIPIN           | [BRAK PARY]          | -
 PIEVERSE        | [BRAK PARY]          | -
-PIXEL           | 0.004816             | Bitget
-PNUT            | 0.042470             | Bitget
+PIXEL           | 0.004836             | Bitget
+PNUT            | 0.043790             | Bitget
 PTB             | [BRAK PARY]          | -
-PUMP            | 0.001497             | Bitget
-RAD             | 0.215000             | Binance (Zapas)
-RARE            | 0.012080             | Bitget
-RED             | 0.090500             | Bitget
-RESOLV          | 0.019830             | Bitget
-RIVER           | 3.6214               | Bitget
-ROAM            | 0.008370             | Bitget
-SAGA            | 0.013200             | Bitget
+PUMP            | 0.001485             | Bitget
+RAD             | 0.214000             | Binance (Zapas)
+RARE            | 0.012090             | Bitget
+RED             | 0.090700             | Bitget
+RESOLV          | 0.019680             | Bitget
+RIVER           | 3.6117               | Bitget
+ROAM            | 0.008397             | Bitget
+SAGA            | 0.013160             | Bitget
 SAROS           | [BRAK PARY]          | -
-SIGN            | 0.008600             | Bitget
-SKYAI           | 0.174730             | Bitget
-SOMI            | 0.102600             | Bitget
-STG             | 0.167200             | Bitget
-STO             | 0.045470             | Bitget
-SXT             | 0.006770             | Bitget
-TNSR            | 0.034940             | Bitget
-TRUST           | 0.051340             | Bitget
+SIGN            | 0.008580             | Bitget
+SKYAI           | 0.195430             | Bitget
+SOMI            | 0.103000             | Bitget
+STG             | 0.168200             | Bitget
+STO             | 0.045630             | Bitget
+SXT             | 0.006810             | Bitget
+TNSR            | 0.035080             | Bitget
+TRUST           | 0.051550             | Bitget
 TRUTH           | [BRAK PARY]          | -
 USELESS         | [BRAK PARY]          | -
-USUAL           | 0.008870             | Bitget
-USTC            | 0.005489             | Bitget
-VANA            | 1.0703               | Bitget
-VELVET          | 1.6448               | Bitget
+USUAL           | 0.008910             | Bitget
+USTC            | 0.005495             | Bitget
+VANA            | 1.0687               | Bitget
+VELVET          | 1.7222               | Bitget
 VINE            | [BRAK PARY]          | -
-VIRTUAL         | 0.534400             | Bitget
+VIRTUAL         | 0.534900             | Bitget
 VVV             | [BRAK PARY]          | -
-WAXP            | 0.004090             | Binance (Zapas)
-WLFI            | 0.058410             | Bitget
+WAXP            | 0.004100             | Binance (Zapas)
+WLFI            | 0.058320             | Bitget
 XNY             | [BRAK PARY]          | -
 XPIN            | [BRAK PARY]          | -
 XPLUS           | [BRAK PARY]          | -
 XRO             | [BRAK PARY]          | -
-ZBCN            | 0.002344             | Bitget
-ZBT             | 0.103400             | Bitget
-ZENT            | 0.002333             | Bitget
+ZBCN            | 0.002345             | Bitget
+ZBT             | 0.103230             | Bitget
+ZENT            | 0.002331             | Bitget
 ZEREBRO         | [BRAK PARY]          | -
 ZKC             | 0.043970             | Bitget
 ZRX             | 0.080900             | Bitget
