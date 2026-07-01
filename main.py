@@ -3,14 +3,22 @@ import pandas as pd
 import gspread
 import json
 import os
-import time  # Dodane do kontroli tempa zapytań
+import time
 from oauth2client.service_account import ServiceAccountCredentials
 
 # --- 1. Konfiguracja ---
 exchange = ccxt.bitget({'enableRateLimit': True})
 
-# Definicja grup instrumentów
-# Upewnij się, że tickery zgadzają się z formatem giełdy (zazwyczaj Ticker/USDT)
+# Definicja mapowania limitów wg Twojej tabeli
+LIMIT_MAP = {
+    '1w': 5,
+    '1d': 10,
+    '4h': 15,
+    '1h': 3,   # Ustawione na 3, aby umożliwić wykrycie FVG (wymaga 3 świec)
+    '15m': 3,
+    '5m': 3
+}
+
 ASSET_GROUPS = {
     'TOP_LIQUIDITY': ['AAVE', 'ADA', 'ALGO', 'APE', 'ATOM', 'BCH', 'BNB', 'BTC', 'CHZ', 'CRV', 'DOGE', 'DOT', 'ETC', 'ETH', 'FIL', 'FLOW', 'GRT', 'ICP', 'INJ', 'LINK', 'LTC', 'MANA', 'NEAR', 'NEO', 'OP', 'POL', 'QNT', 'QTUM', 'RUNE', 'SHIB', 'SOL', 'SNX', 'TRX', 'TWT', 'UNI', 'XLM', 'XMR', 'XRP', 'XTZ', 'YFI', 'ZEC'],
     'MID_CAPS': ['1INCH', 'ACX', 'AGLD', 'AGX', 'ALCH', 'API3', 'APT', 'ARB', 'ARKM', 'ASTR', 'AUCTION', 'AXS', 'BICO', 'BIGTIME', 'BLUR', 'CAKE', 'CELO', 'CFX', 'COMP', 'DYDX', 'DYM', 'ENA', 'ENJ', 'ENS', 'GALA', 'GAS', 'GMX', 'HIGH', 'HBAR', 'IMX', 'IO', 'JASMY', 'JTO', 'JUP', 'KAVA', 'KNC', 'LDO', 'LRC', 'LPT', 'METIS', 'MINA', 'MOVR', 'MASK', 'MTL', 'NFP', 'NOT', 'ONDO', 'ORDI', 'PENDLE', 'PHB', 'POLYX', 'PYTH', 'REZ', 'RPL', 'RSR', 'RVN', 'SCR', 'SEI', 'STRK', 'STX', 'SUI', 'SUPER', 'TAO', 'THE', 'TIA', 'TON', 'TSTBSC', 'TURBO', 'UMA', 'VANRY', 'VIC', 'WLD', 'WOO', 'WIF', 'YGG', 'ZIL', 'ZRO'],
@@ -30,26 +38,28 @@ def update_spreadsheet(fvg_data):
     try:
         client = get_gspread_client()
         sheet = client.open('Twoj_Skaner_Wyniki').sheet1
-        # Nowa kolumna 'category' w nagłówku
         headers = ['category', 'symbol', 'interval', 'type', 'fvg_start', 'fvg_end', 'base_high', 'base_low']
         rows = [[d[h] for h in headers] for d in fvg_data]
         sheet.clear()
         sheet.append_row(headers)
         sheet.append_rows(rows)
-        print(f"Zaktualizowano arkusz: {len(rows)} rekordów.")
+        print(f"Zaktualizowano arkusz: {len(rows)} świeżych sygnałów.")
     except Exception as e:
         print(f"Błąd zapisu do arkusza: {e}")
 
 # --- 3. Logika Skanowania ---
-def fetch_and_analyze(symbol, category, timeframe='1h', limit=50):
+def fetch_and_analyze(symbol, category, timeframe='1h'):
     try:
-        # Dodajemy /USDT do tickera
         pair = f"{symbol}/USDT"
+        limit = LIMIT_MAP.get(timeframe.lower(), 50)
+        
         ohlcv = exchange.fetch_ohlcv(pair, timeframe, limit=limit)
         df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
         
         fvg_data = []
-        for i in range(2, len(df)):
+        # Skupiamy się tylko na ostatniej zamkniętej świecy (indeks len(df)-1)
+        i = len(df) - 1
+        if i >= 2:
             prev_2 = df.iloc[i-2]
             current = df.iloc[i]
             
@@ -57,9 +67,9 @@ def fetch_and_analyze(symbol, category, timeframe='1h', limit=50):
                 fvg_data.append({'category': category, 'symbol': pair, 'interval': timeframe, 'type': 'BULLISH', 'fvg_start': float(prev_2['high']), 'fvg_end': float(current['low']), 'base_high': float(prev_2['high']), 'base_low': float(prev_2['low'])})
             elif current['high'] < prev_2['low']:
                 fvg_data.append({'category': category, 'symbol': pair, 'interval': timeframe, 'type': 'BEARISH', 'fvg_start': float(prev_2['low']), 'fvg_end': float(current['high']), 'base_high': float(prev_2['high']), 'base_low': float(prev_2['low'])})
+        
         return fvg_data
     except Exception as e:
-        print(f"Błąd {symbol}: {e}")
         return []
 
 # --- 4. Główna pętla ---
@@ -67,16 +77,15 @@ if __name__ == "__main__":
     TIMEFRAME = '1h'
     all_results = []
     
+    print("Rozpoczynam zoptymalizowane skanowanie...")
     for category, symbols in ASSET_GROUPS.items():
-        print(f"Analizuję grupę: {category} ({len(symbols)} par)")
         for symbol in symbols:
             results = fetch_and_analyze(symbol, category, TIMEFRAME)
             if results:
                 all_results.extend(results)
-            time.sleep(0.1) # Anty-ban: mała pauza między zapytaniami
+            time.sleep(0.05) 
 
     if all_results:
-        print(f"Znaleziono łącznie {len(all_results)} FVG. Wysyłam...")
         update_spreadsheet(all_results)
     else:
-        print("Brak sygnałów.")
+        print("Brak nowych sygnałów na ostatniej świecy.")
