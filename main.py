@@ -34,17 +34,25 @@ def update_spreadsheet(fvg_data):
         sheet.clear()
         sheet.append_row(headers)
         sheet.append_rows(rows)
-        print(f"Pomyślnie wysłano {len(rows)} wierszy do arkusza.")
+        
+        # Jeśli kod dotarł tutaj, zapis przebiegł pomyślnie
+        print(f"SUKCES: Pomyślnie wysłano {len(rows)} wierszy do arkusza.")
+        
     except Exception as e:
-        print(f"Błąd podczas zapisu do arkusza: {e}")
+        # Ten blok wykona się tylko w razie faktycznego błędu połączenia lub uprawnień
+        print(f"BŁĄD KRYTYCZNY podczas zapisu do arkusza: {e}")
 
 # --- 2. Logika Skanowania (Bitget) ---
 exchange = ccxt.bitget()
 
 def fetch_and_analyze(symbol, timeframe='1h', limit=50):
     # 1. Pobieranie danych
-    ohlcv = exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
-    df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+    try:
+        ohlcv = exchange.fetch_ohlcv(symbol, timeframe, limit=limit)
+        df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
+    except Exception as e:
+        print(f"Błąd pobierania danych z giełdy: {e}")
+        return []
     
     # 2. Wykrywanie FVG
     fvg_data = []
@@ -54,7 +62,7 @@ def fetch_and_analyze(symbol, timeframe='1h', limit=50):
         prev_2 = df.iloc[i-2]
         current = df.iloc[i]
         
-        # Bullish FVG
+        # Bullish FVG: Low obecnej świecy > High świecy sprzed 2 okresów
         if current['low'] > prev_2['high']:
             fvg_data.append({
                 'symbol': symbol,
@@ -66,7 +74,7 @@ def fetch_and_analyze(symbol, timeframe='1h', limit=50):
                 'base_low': float(prev_2['low'])
             })
             
-        # Bearish FVG
+        # Bearish FVG: High obecnej świecy < Low świecy sprzed 2 okresów
         elif current['high'] < prev_2['low']:
             fvg_data.append({
                 'symbol': symbol,
@@ -92,4 +100,4 @@ if __name__ == "__main__":
         print(f"Znaleziono {len(results)} FVG. Wysyłam do arkusza...")
         update_spreadsheet(results)
     else:
-        print("Nie znaleziono żadnych FVG.")
+        print("Nie znaleziono żadnych FVG lub wystąpił błąd pobierania.")
