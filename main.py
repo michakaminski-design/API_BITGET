@@ -2,8 +2,8 @@ import requests
 
 def pobierz_i_parsuj_crt(url_do_surowego_pliku):
     """
-    Pobiera plik ceny.txt i przekształca go w słownik Pythonowy.
-    URL powinien prowadzić do wersji 'raw' pliku na GitHubie.
+    Pobiera rozbudowany plik ceny.txt i przekształca go w słownik Pythonowy.
+    Obsługuje zaawansowany kontekst rynkowy (FVG, Key Levels, Stany CRT).
     """
     try:
         response = requests.get(url_do_surowego_pliku)
@@ -14,23 +14,27 @@ def pobierz_i_parsuj_crt(url_do_surowego_pliku):
         linie = response.text.strip().split('\n')
         baza_danych_crt = {}
 
-        # Przetwarzamy linie od trzeciej (indeks 2), pomijając nagłówki i linię przerywaną
         for linia in linie:
-            if "|" not in linia or "Cena LIVE" in linia or "---" in linia:
-                continue  # Pomija linie nagłówkowe i dekoracyjne
+            if "|" not in linia or "Cena LIVE" in linia or "---" in linia or "OSTATNIA" in linia:
+                continue  # Pomija nagłówki, linie dekoracyjne i metadane czasu
             
-            # Podział linii na kolumny i usunięcie białych znaków
+            # Podział linii na kolumny i oczyszczenie z białych znaków
             kolumny = [kol.strip() for col in linia.split('|') for kol in [col.strip()]]
             
-            if len(kolumny) >= 5:
+            # Wymagamy rozszerzonej struktury (minimum 9 kolumn dla pełnego podglądu danych)
+            if len(kolumny) >= 9:
                 ticker = kolumny[0]
                 str_live = kolumny[1]
                 str_high = kolumny[2]
                 str_low = kolumny[3]
-                zrodlo = kolumny[4]
+                htf_context = kolumny[4]      # Np. "1D_FVG_SUPPORT" lub "1W_KEY_LEVEL_BOUNCE"
+                str_sweep_max = kolumny[5]    # Maksimum manipulacji (do SL)
+                str_sweep_min = kolumny[6]    # Minimum manipulacji (do SL)
+                crt_state = kolumny[7]        # Stan: IDLE, SWEEP_HIGH, SWEEP_LOW, CONFIRMED_LONG, CONFIRMED_SHORT
+                zrodlo = kolumny[8]
 
                 # Filtrowanie braków danych
-                if "[BRAK DANYCH]" in str_live or str_high == "-":
+                if "[BRAK DANYCH]" in str_live or "[BRAK PARY]" in str_live or str_high == "-":
                     continue
 
                 try:
@@ -38,10 +42,14 @@ def pobierz_i_parsuj_crt(url_do_surowego_pliku):
                         "live": float(str_live),
                         "range_high": float(str_high),
                         "range_low": float(str_low),
-                        "source": zrodlo
+                        "htf_context": htf_context,
+                        "sweep_max": float(str_sweep_max) if str_sweep_max != "-" else None,
+                        "sweep_min": float(str_sweep_min) if str_sweep_min != "-" else None,
+                        "crt_state": crt_state.upper(),
+                        "source": zrodlo,
+                        "rsi_optional": None # Opcjonalne pole inicjalizacyjne, jeśli skrypt dopisze RSI
                     }
                 except ValueError:
-                    # Zabezpieczenie przed błędami konwersji tekst -> float
                     continue
 
         return baza_danych_crt
@@ -51,28 +59,97 @@ def pobierz_i_parsuj_crt(url_do_surowego_pliku):
         return None
 
 # =====================================================================
-# PRZYKŁAD UŻYCIA W LOGICE TRADINGOWEJ
+# ZAAWANSOWANA LOGIKA DECYZYJNA STRATEGII V6.1
 # =====================================================================
+def uruchom_logike_v61(ticker, dane):
+    print(f"\n[ANALIZA: {ticker}] Stan: {dane['crt_state']} | Cena: {dane['live']}")
+    print(f" -> Kontekst HTF: {dane['htf_context']}")
+    print(f" -> Zakres CRT: {dane['range_low']} - {dane['range_high']}")
+
+    # Definiowanie filtrów siły poziomów (Level Strength Filter)
+    is_macro_level = "1D_KEY" in dane['htf_context'] or "1W_KEY" in dane['htf_context']
+    is_fvg_zone = "4H_FVG" in dane['htf_context'] or "1D_FVG" in dane['htf_context']
+
+    # --- SCENARIUSZ LONG (BULLISH CRT) ---
+    if dane['crt_state'] == "CONFIRMED_LONG":
+        # Sprawdzamy czy struktura zbiega się z wyższym interwałem rynkowym (POI)
+        if is_macro_level or is_fvg_zone:
+            print(f"🔥 [SYGNAŁ BUY] Wykryto setup Bullish CRT w strefie HTF!")
+            
+            # Punkt II (Arena) - Filtrowanie siły poziomu rynkowego
+            if is_macro_level:
+                print(" -> [FILTR] Reakcja na Kluczowy Poziom 1D/1W lub PDH/PDL.")
+                print(" -> [EGZEKUCJA] Wejście AGRESYWNE (50% Market Order) ze względu na siłę poziomu.")
+            else:
+                print(" -> [EGZEKUCJA] Wejście standardowe po potwierdzeniu struktury (Limit/Stop).")
+            
+            # Kalkulacja poziomów obronnych i docelowych
+            if dane['sweep_min']:
+                sl = dane['sweep_min']
+                tp = dane['range_high']
+                print(f" -> Parametry zlecenia: SL: {sl} | TP: {tp}")
+        else:
+            print(" ❌ [ODRZUCONO] Sygnał CRT Long powstał w pustej przestrzeni (brak konfluencji z HTF/FVG).")
+
+    # --- SCENARIUSZ SHORT (BEARISH CRT) ---
+    elif dane['crt_state'] == "CONFIRMED_SHORT":
+        if is_macro_level or is_fvg_zone:
+            print(f"🔥 [SYGNAŁ SELL] Wykryto setup Bearish CRT w strefie HTF!")
+            
+            if is_macro_level:
+                print(" -> [FILTR] Reakcja na Kluczowy Poziom 1D/1W lub PDH/PDL.")
+                print(" -> [EGZEKUCJA] Wejście AGRESYWNE (50% Market Order) ze względu na siłę poziomu.")
+            else:
+                print(" -> [EGZEKUCJA] Wejście standardowe.")
+                
+            if dane['sweep_max']:
+                sl = dane['sweep_max']
+                tp = dane['range_low']
+                print(f" -> Parametry zlecenia: SL: {sl} | TP: {tp}")
+        else:
+            print(" ❌ [ODRZUCONO] Sygnał CRT Short powstał w pustej przestrzeni (brak konfluencji z HTF/FVG).")
+
+    # --- MONITOROWANIE FAZY MANIPULACJI (SWEEP) ---
+    elif dane['crt_state'] == "SWEEP_LOW":
+        print(" 👀 [MONITOROWANIE] Płynność z dołu wyczyszczona. Oczekiwanie na zamknięcie świecy LTF wewnątrz zakresu.")
+    elif dane['crt_state'] == "SWEEP_HIGH":
+        print(" 👀 [MONITOROWANIE] Płynność z góry wyczyszczona. Oczekiwanie na zamknięcie świecy LTF wewnątrz zakresu.")
+    else:
+        print(" 💤 [INFO] Brak aktywnych manipulacji na świecy referencyjnej.")
+
+
 if __name__ == "__main__":
-    # Link do wersji RAW Twojego pliku na GitHubie
+    # Testowy link RAW do bazy danych
     URL_RAW = "https://raw.githubusercontent.com/michakaminski-design/API_BITGET/main/ceny.txt"
     
-    print("Pobieranie aktualnych poziomów CRT...")
-    dane_rynkowe = pobierz_i_parsuj_crt(URL_RAW)
-
-    if dane_rynkowe and "BTC" in dane_rynkowe:
-        btc = dane_rynkowe["BTC"]
-        print(f"\nPomyślnie załadowano dane dla {len(dane_rynkowe)} aktywów.")
-        print(f"Przykładowe dane dla BTC:")
-        print(f"  - Cena LIVE: {btc['live']}")
-        print(f"  - CRT Range High: {btc['range_high']}")
-        print(f"  - CRT Range Low: {btc['range_low']}")
-        print(f"  - Źródło: {btc['source']}")
-
-        # Przykład prostej weryfikacji warunku w locie:
-        if btc['live'] > btc['range_high']:
-            print("\n[ALERT] Cena BTC znajduje się powyżej struktury CRT Range High (Potencjalny Sweep / Szukanie Shorta).")
-        elif btc['live'] < btc['range_low']:
-            print("\n[ALERT] Cena BTC znajduje się poniżej struktury CRT Range Low (Potencjalny Sweep / Szukanie Longa).")
-        else:
-            print("\n[INFO] Cena BTC wewnątrz zakresu konsolidacji.")
+    # Symulacja bazy danych po rozbudowaniu skryptu generującego plik tekstowy:
+    # Format linii: Ticker | Live | High | Low | HTF_Context | Sweep_Max | Sweep_Min | CRT_State | Source
+    print("Pobieranie rozszerzonych danych rynkowych i poziomów HTF...")
+    
+    # Dla celów testowych ręcznie symulujemy strukturę danych, którą Twój skrypt generujący powinien zapisać:
+    testowa_baza = {
+        "BTC": {
+            "live": 58850.00,
+            "range_high": 59000.00,
+            "range_low": 58200.00,
+            "htf_context": "1D_KEY_LEVEL_BOUNCE",
+            "sweep_max": "-",
+            "sweep_min": 58110.00,
+            "crt_state": "CONFIRMED_LONG",
+            "source": "Bitget"
+        },
+        "ETH": {
+            "live": 1564.00,
+            "range_high": 1580.00,
+            "range_low": 1550.00,
+            "htf_context": "BEARISH_4H_FVG_TEST",
+            "sweep_max": 1585.00,
+            "sweep_min": "-",
+            "crt_state": "SWEEP_HIGH",
+            "source": "Bitget"
+        }
+    }
+    
+    # Uruchomienie logiki handlowej dla danych testowych
+    uruchom_logike_v61("BTC", testowa_baza["BTC"])
+    uruchom_logike_v61("ETH", testowa_baza["ETH"])
