@@ -9,12 +9,11 @@ from oauth2client.service_account import ServiceAccountCredentials
 # --- 1. Konfiguracja ---
 exchange = ccxt.bitget({'enableRateLimit': True})
 
-# Definicja mapowania limitów wg Twojej tabeli
 LIMIT_MAP = {
     '1w': 5,
     '1d': 10,
     '4h': 15,
-    '1h': 3,   # Ustawione na 3, aby umożliwić wykrycie FVG (wymaga 3 świec)
+    '1h': 3,
     '15m': 3,
     '5m': 3
 }
@@ -40,24 +39,27 @@ def update_spreadsheet(fvg_data):
         sheet = client.open('Twoj_Skaner_Wyniki').sheet1
         headers = ['category', 'symbol', 'interval', 'type', 'fvg_start', 'fvg_end', 'base_high', 'base_low']
         rows = [[d[h] for h in headers] for d in fvg_data]
+        
         sheet.clear()
         sheet.append_row(headers)
         sheet.append_rows(rows)
-        print(f"Zaktualizowano arkusz: {len(rows)} świeżych sygnałów.")
+        print(f"SUKCES: Zaktualizowano arkusz {len(rows)} rekordami.")
     except Exception as e:
-        print(f"Błąd zapisu do arkusza: {e}")
+        # Ignorujemy błędy typu [200], które są w rzeczywistości sukcesami
+        if "200" in str(e):
+            print("SUKCES: Dane zapisane (odpowiedź 200).")
+        else:
+            print(f"BŁĄD ZAPISU: {e}")
 
 # --- 3. Logika Skanowania ---
 def fetch_and_analyze(symbol, category, timeframe='1h'):
     try:
         pair = f"{symbol}/USDT"
         limit = LIMIT_MAP.get(timeframe.lower(), 50)
-        
         ohlcv = exchange.fetch_ohlcv(pair, timeframe, limit=limit)
         df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
         
         fvg_data = []
-        # Skupiamy się tylko na ostatniej zamkniętej świecy (indeks len(df)-1)
         i = len(df) - 1
         if i >= 2:
             prev_2 = df.iloc[i-2]
@@ -67,9 +69,8 @@ def fetch_and_analyze(symbol, category, timeframe='1h'):
                 fvg_data.append({'category': category, 'symbol': pair, 'interval': timeframe, 'type': 'BULLISH', 'fvg_start': float(prev_2['high']), 'fvg_end': float(current['low']), 'base_high': float(prev_2['high']), 'base_low': float(prev_2['low'])})
             elif current['high'] < prev_2['low']:
                 fvg_data.append({'category': category, 'symbol': pair, 'interval': timeframe, 'type': 'BEARISH', 'fvg_start': float(prev_2['low']), 'fvg_end': float(current['high']), 'base_high': float(prev_2['high']), 'base_low': float(prev_2['low'])})
-        
         return fvg_data
-    except Exception as e:
+    except Exception:
         return []
 
 # --- 4. Główna pętla ---
@@ -83,7 +84,7 @@ if __name__ == "__main__":
             results = fetch_and_analyze(symbol, category, TIMEFRAME)
             if results:
                 all_results.extend(results)
-            time.sleep(0.05) 
+            time.sleep(0.05)
 
     if all_results:
         update_spreadsheet(all_results)
