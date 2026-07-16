@@ -1,5 +1,1 @@
 ccxt
-requests
-pandas
-gspread
-oauth2client
